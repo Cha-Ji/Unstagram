@@ -2,10 +2,13 @@ package co.kr.datapia.interfaces;
 
 import co.kr.datapia.application.BoardService;
 import co.kr.datapia.domain.Board;
-import co.kr.datapia.domain.BoardRepositoryImpl;
+import co.kr.datapia.domain.BoardRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.List;
 
 @RestController
@@ -14,35 +17,48 @@ public class BoardController {
     @Autowired
     private BoardService boardService;
 
-    @Autowired
-    private BoardRepositoryImpl boardRepositoryImpl;
+//    @Autowired
+//    private BoardRepository boardRepository;
 
 
     @GetMapping("/board")
     public List<Board> list(){
-        List<Board> boards = boardRepositoryImpl.findAll();
-        return boards;
-    }
-
-
-    @GetMapping("/board/{author}")
-    public List<Board> read(@PathVariable("author") String author){
-        List<Board> boards = boardRepositoryImpl.findAll();
+        List<Board> boards = boardService.getBoards();
         return boards;
     }
 
     @PostMapping("/board")
-    public Board create(){
-        Board board = new Board("ChaJi");
-        board.setContents("so cold");
+    public ResponseEntity<?> create(
+            @RequestBody Board resource
+    ) throws URISyntaxException {
+        //게시할 글의 정보를 얻는다.
+        String author = resource.getAuthor();
+        String img = resource.getImg();
+        String contents = resource.getContents();
+        String writeTime = resource.getWriteTime();
 
-        return board;
+        //글을 게시한다.
+        Board board = boardService
+                .addBoard(author,img,contents,writeTime);
+
+        //url에 게시글을 띄운다.
+        String url = "/board/" + board.getAuthor();
+        return ResponseEntity.created(new URI(url)).body("{}");
     }
 
-    public void delete(){
 
+//
+//    @GetMapping("/board/{author}")
+//    public List<Board> read(@PathVariable("author") String author){
+//        List<Board> boards = boardRepository.findAll();
+//        return boards;
+//    }
 
-
-    }
+//
+//    public void delete(){
+//
+//
+//
+//    }
 
 }

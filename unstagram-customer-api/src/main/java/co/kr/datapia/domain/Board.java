@@ -16,7 +16,6 @@ import java.util.List;
 public class Board {
     @Id
     @GeneratedValue
-    @Setter
     private String author;
 
     private String img; //TODO: List<String>이 안되는 이유?
