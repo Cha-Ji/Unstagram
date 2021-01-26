@@ -42,14 +42,18 @@ public class BoardController {
         return ResponseEntity.created(new URI(url)).body("{}");
     }
 
+    @PatchMapping("/board/{author}")
+    public String update(
+            @PathVariable("author") String author
+//            @RequestParam Board resource
+    ){
+        String img          = "winter";
+        String contents     = "so sweet";
+        String writeTime    = "Mon Jan 1 1592 17:00:00 KST";
 
-//
-//    @GetMapping("/board/{author}")
-//    public List<Board> read(@PathVariable("author") String author){
-//        List<Board> boards = boardRepository.findAll();
-//        return boards;
-//    }
-
+        boardService.updateBoard(author, img, contents, writeTime);
+        return "{}";
+    }
 //
 //    public void delete(){
 //

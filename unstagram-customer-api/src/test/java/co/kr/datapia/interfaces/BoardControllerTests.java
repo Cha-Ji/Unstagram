@@ -19,8 +19,7 @@ import java.util.List;
 import static org.hamcrest.Matchers.containsString;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.verify;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -84,14 +83,20 @@ public class BoardControllerTests {
         verify(boardService).addBoard(author, img, contents, writeTime);
     }
 
-//    @Test
-//    public void read() throws Exception {
-//
-//        mvc.perform(get("/board/ChaJi"))
-//                .andExpect(status().isOk())
-//                .andExpect(content().string(
-//                        containsString("so cold")
-//                ));
-//    }
+    @Test
+    public void update() throws Exception {
+        mvc.perform(patch("/board/ChaJi")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content("\"author\":\"ChaJi\"," +
+                        "\"img\":\"winter\"," +
+                        "\"contents\":\"so sweet\"," +
+                        "\"writeTime\":\"Mon Jan 1 1592 17:00:00 KST\""))
+                .andExpect(status().isOk());
+
+
+
+    }
+
+    
 
 }
