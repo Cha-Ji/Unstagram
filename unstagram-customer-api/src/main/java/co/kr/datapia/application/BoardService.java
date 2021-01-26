@@ -44,4 +44,10 @@ public class BoardService {
 
     }
 
+    public Board deactivateBoard(String author) {
+        Board board = boardRepository.findByAuthor(author).orElse(null);
+
+        board.deactivate();
+        return board;
+    }
 }

@@ -97,6 +97,12 @@ public class BoardControllerTests {
 
     }
 
-    
+    @Test
+    public void deactivate() throws Exception {
+        mvc.perform(delete("/board/ChaJi"))
+                .andExpect(status().isOk());
+
+        verify(boardService).deactivateBoard("ChaJi");
+    }
 
 }

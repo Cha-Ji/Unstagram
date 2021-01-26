@@ -54,11 +54,13 @@ public class BoardController {
         boardService.updateBoard(author, img, contents, writeTime);
         return "{}";
     }
-//
-//    public void delete(){
-//
-//
-//
-//    }
+
+    @DeleteMapping("/board/{author}")
+    public String delete(
+        @PathVariable("author") String author
+    ){
+        boardService.deactivateBoard(author);
+        return "{}";
+    }
 
 }

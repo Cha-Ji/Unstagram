@@ -29,5 +29,7 @@ public class Board {
     }
 
 
-
+    public void deactivate() {
+        //TODO: 어떻게 없애지?
+    }
 }
