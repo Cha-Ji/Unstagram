@@ -55,23 +55,14 @@ public class BoardControllerTests {
 
     }
 
-//    @Test
-//    public void read() throws Exception {
-//
-//        mvc.perform(get("/board/ChaJi"))
-//                .andExpect(status().isOk())
-//                .andExpect(content().string(
-//                        containsString("so cold")
-//                ));
-//    }
 
     @Test
     public void create() throws Exception {
         //글 게시
-        String author = "ChaJi";
-        String img = "winter";
-        String contents = "so cold";
-        String writeTime = "Tue Jan 26 2021 17:00:00 KST";
+        String author       = "ChaJi";
+        String img          = "winter";
+        String contents     = "so cold";
+        String writeTime    = "Tue Jan 26 2021 17:00:00 KST";
 
         Board board = Board.builder()
                 .author(author)
@@ -82,8 +73,6 @@ public class BoardControllerTests {
 
         given(boardService.addBoard(author, img, contents, writeTime)).willReturn(board);
 
-
-
         mvc.perform(post("/board")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content("\"author\":\"ChaJi\"," +
@@ -92,8 +81,17 @@ public class BoardControllerTests {
                         "\"writeTime\":\"Tue Jan 26 2021 17:00:00 KST\""))
                 .andExpect(status().isCreated());
 
-        verify(boardService.addBoard(author, img, contents, writeTime));
+        verify(boardService).addBoard(author, img, contents, writeTime);
     }
 
+//    @Test
+//    public void read() throws Exception {
+//
+//        mvc.perform(get("/board/ChaJi"))
+//                .andExpect(status().isOk())
+//                .andExpect(content().string(
+//                        containsString("so cold")
+//                ));
+//    }
 
 }

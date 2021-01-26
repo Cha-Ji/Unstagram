@@ -17,10 +17,6 @@ public class BoardController {
     @Autowired
     private BoardService boardService;
 
-//    @Autowired
-//    private BoardRepository boardRepository;
-
-
     @GetMapping("/board")
     public List<Board> list(){
         List<Board> boards = boardService.getBoards();
@@ -32,10 +28,10 @@ public class BoardController {
             @RequestBody Board resource
     ) throws URISyntaxException {
         //게시할 글의 정보를 얻는다.
-        String author = resource.getAuthor();
-        String img = resource.getImg();
-        String contents = resource.getContents();
-        String writeTime = resource.getWriteTime();
+        String author       = "ChaJi";
+        String img          = "winter";
+        String contents     = "so cold";
+        String writeTime    = "Tue Jan 26 2021 17:00:00 KST";
 
         //글을 게시한다.
         Board board = boardService
