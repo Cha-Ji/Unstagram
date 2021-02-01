@@ -35,7 +35,7 @@ public class BoardService {
         return boards;
     }
 
-    public void updateBoard(String author, String img, String contents, String writeTime) {
+    public void updateBoard(String author, Long id, String img, String contents, String writeTime) {
     // TODO: findById로 바꾸자
         Board board = boardRepository.findByAuthor(author).orElse(null);
 
@@ -44,10 +44,9 @@ public class BoardService {
 
     }
 
-    public Board deactivateBoard(String author) {
+    public Board deactivateBoard(String author, Long id) {
         Board board = boardRepository.findByAuthor(author).orElse(null);
 
-        board.deactivate();
         return board;
     }
 }

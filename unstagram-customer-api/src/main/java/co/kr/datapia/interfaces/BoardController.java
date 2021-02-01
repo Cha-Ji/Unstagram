@@ -38,28 +38,31 @@ public class BoardController {
                 .addBoard(author,img,contents,writeTime);
 
         //url에 게시글을 띄운다.
-        String url = "/board/" + board.getAuthor();
+        String url = "/board/" + board.getAuthor() + board.getId();
         return ResponseEntity.created(new URI(url)).body("{}");
     }
 
-    @PatchMapping("/board/{author}")
+    @PatchMapping("/board/{author}/{id}")
     public String update(
-            @PathVariable("author") String author
+            @PathVariable("author") String author,
+            @PathVariable("id") Long id,
+            @RequestBody Board resource
 //            @RequestParam Board resource
     ){
-        String img          = "winter";
-        String contents     = "so sweet";
-        String writeTime    = "Mon Jan 1 1592 17:00:00 KST";
+        String img          = resource.getImg();
+        String contents     = resource.getContents();
+        String writeTime    = resource.getWriteTime();
 
-        boardService.updateBoard(author, img, contents, writeTime);
+        boardService.updateBoard(author, id,  img, contents, writeTime);
         return "{}";
     }
 
     @DeleteMapping("/board/{author}")
     public String delete(
-        @PathVariable("author") String author
+        @PathVariable("author") String author,
+        @PathVariable("id") Long id
     ){
-        boardService.deactivateBoard(author);
+        boardService.deactivateBoard(author, id);
         return "{}";
     }
 

@@ -9,7 +9,6 @@ import java.util.List;
 
 @Builder
 @Getter
-@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
@@ -18,18 +17,17 @@ public class Board {
     @GeneratedValue
     private String author;
 
+    private Long id;
+
     private String img; //TODO: List<String>이 안되는 이유?
 
+    @Setter
     private String contents;
 
+    @Setter
     private String writeTime; //"Tue Jan 19 2021 17:06:30 GMT+0900"
 
     public Board(String author){
         this.author = author;
-    }
-
-
-    public void deactivate() {
-        //TODO: 어떻게 없애지?
     }
 }

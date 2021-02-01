@@ -2,13 +2,11 @@ package co.kr.datapia.interfaces;
 
 import co.kr.datapia.application.BoardService;
 import co.kr.datapia.domain.Board;
-import co.kr.datapia.domain.BoardRepository;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.boot.test.mock.mockito.SpyBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
@@ -88,12 +86,11 @@ public class BoardControllerTests {
         mvc.perform(patch("/board/ChaJi")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content("\"author\":\"ChaJi\"," +
+//                        "\"id\":\1L\"," +
                         "\"img\":\"winter\"," +
                         "\"contents\":\"so sweet\"," +
                         "\"writeTime\":\"Mon Jan 1 1592 17:00:00 KST\""))
                 .andExpect(status().isOk());
-
-
 
     }
 
@@ -102,7 +99,7 @@ public class BoardControllerTests {
         mvc.perform(delete("/board/ChaJi"))
                 .andExpect(status().isOk());
 
-        verify(boardService).deactivateBoard("ChaJi");
+        verify(boardService).deactivateBoard("ChaJi", 1L);
     }
 
 }

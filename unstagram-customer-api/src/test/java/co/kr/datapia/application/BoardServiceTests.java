@@ -26,6 +26,7 @@ public class BoardServiceTests {
 
         boardService = new BoardService(boardRepository);
     }
+
     @Test
     public void getBoards(){
         List<Board> mockBoard = new ArrayList<>();
