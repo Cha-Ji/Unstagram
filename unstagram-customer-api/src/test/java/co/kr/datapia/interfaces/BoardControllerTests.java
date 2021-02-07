@@ -36,7 +36,8 @@ public class BoardControllerTests {
         //GetMapping test
         List<Board> boards = new ArrayList<>();
 
-        boards.add(Board.builder()
+        boards.add(
+                Board.builder()
                 .author("ChaJi")
                 .build()
         );
@@ -61,6 +62,7 @@ public class BoardControllerTests {
         String contents     = "so cold";
         String writeTime    = "Tue Jan 26 2021 17:00:00 KST";
 
+
         Board board = Board.builder()
                 .author(author)
                 .img(img)
@@ -72,12 +74,12 @@ public class BoardControllerTests {
 
         mvc.perform(post("/board")
                 .contentType(MediaType.APPLICATION_JSON)
-                .content("\"author\":\"ChaJi\"," +
+                .content("{\"author\":\"ChaJi\"," +
                         "\"img\":\"winter\"," +
                         "\"contents\":\"so cold\"," +
-                        "\"writeTime\":\"Tue Jan 26 2021 17:00:00 KST\""))
-                .andExpect(status().isCreated());
-
+                        "\"writeTime\":\"Tue Jan 26 2021 17:00:00 KST\"}"))
+                .andExpect(status().isCreated())
+                .andExpect(content().string("{}"));
         verify(boardService).addBoard(author, img, contents, writeTime);
     }
 

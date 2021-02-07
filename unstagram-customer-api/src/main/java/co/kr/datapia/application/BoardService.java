@@ -25,8 +25,7 @@ public class BoardService {
                 .writeTime(writeTime)
                 .build();
 
-        boardRepository.save(board);
-        return board;
+        return boardRepository.save(board);
     }
 
     public List<Board> getBoards() {

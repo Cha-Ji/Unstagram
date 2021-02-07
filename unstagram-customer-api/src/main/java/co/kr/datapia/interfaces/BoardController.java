@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
@@ -25,17 +26,18 @@ public class BoardController {
 
     @PostMapping("/board")
     public ResponseEntity<?> create(
-            @RequestBody Board resource
+            @Valid @RequestBody Board resource
     ) throws URISyntaxException {
+
         //게시할 글의 정보를 얻는다.
-        String author       = "ChaJi";
-        String img          = "winter";
-        String contents     = "so cold";
-        String writeTime    = "Tue Jan 26 2021 17:00:00 KST";
+        String author       = resource.getAuthor();
+        String img          = resource.getImg();
+        String contents     = resource.getContents();
+        String writeTime    = resource.getWriteTime();
 
         //글을 게시한다.
-        Board board = boardService
-                .addBoard(author,img,contents,writeTime);
+        Board board = boardService.addBoard(
+                        author,img,contents,writeTime);
 
         //url에 게시글을 띄운다.
         String url = "/board/" + board.getAuthor() + board.getId();
@@ -47,7 +49,6 @@ public class BoardController {
             @PathVariable("author") String author,
             @PathVariable("id") Long id,
             @RequestBody Board resource
-//            @RequestParam Board resource
     ){
         String img          = resource.getImg();
         String contents     = resource.getContents();

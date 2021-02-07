@@ -13,17 +13,18 @@ import java.util.List;
 @AllArgsConstructor
 @Entity
 public class Board {
-    @Id
-    @GeneratedValue
     private String author;
 
+    @Id
+    @GeneratedValue
     private Long id;
 
-    private String img; //TODO: List<String>이 안되는 이유?
+    private String img;
 
     @Setter
     private String contents;
 
+    //TODO: 시간 자동으로 바꾸기
     @Setter
     private String writeTime; //"Tue Jan 19 2021 17:06:30 GMT+0900"
 
