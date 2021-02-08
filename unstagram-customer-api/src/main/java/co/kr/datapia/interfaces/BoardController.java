@@ -4,12 +4,17 @@ import co.kr.datapia.application.BoardService;
 import co.kr.datapia.domain.Board;
 import co.kr.datapia.domain.BoardRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.persistence.EntityListeners;
+import javax.persistence.MappedSuperclass;
 import javax.validation.Valid;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @RestController
@@ -33,7 +38,7 @@ public class BoardController {
         String author       = resource.getAuthor();
         String img          = resource.getImg();
         String contents     = resource.getContents();
-        String writeTime    = resource.getWriteTime();
+        LocalDateTime writeTime    = resource.getCreatedDate();
 
         //글을 게시한다.
         Board board = boardService.addBoard(
@@ -52,19 +57,20 @@ public class BoardController {
     ){
         String img          = resource.getImg();
         String contents     = resource.getContents();
-        String writeTime    = resource.getWriteTime();
+        LocalDateTime writeTime    = resource.getModifiedDate();
 
         boardService.updateBoard(author, id,  img, contents, writeTime);
         return "{}";
     }
 
-    @DeleteMapping("/board/{author}")
-    public String delete(
+    @DeleteMapping("/board/{author}/{id}")
+    public String deactivate(
         @PathVariable("author") String author,
         @PathVariable("id") Long id
     ){
         boardService.deactivateBoard(author, id);
         return "{}";
     }
+
 
 }

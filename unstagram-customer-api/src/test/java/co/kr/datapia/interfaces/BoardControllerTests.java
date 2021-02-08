@@ -11,6 +11,7 @@ import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -60,15 +61,15 @@ public class BoardControllerTests {
         String author       = "ChaJi";
         String img          = "winter";
         String contents     = "so cold";
-        String writeTime    = "Tue Jan 26 2021 17:00:00 KST";
 
 
         Board board = Board.builder()
                 .author(author)
                 .img(img)
                 .contents(contents)
-                .writeTime(writeTime)
                 .build();
+
+        LocalDateTime writeTime = board.getCreatedDate();
 
         given(boardService.addBoard(author, img, contents, writeTime)).willReturn(board);
 
@@ -85,20 +86,19 @@ public class BoardControllerTests {
 
     @Test
     public void update() throws Exception {
-        mvc.perform(patch("/board/ChaJi")
+        mvc.perform(patch("/board/ChaJi/1")
                 .contentType(MediaType.APPLICATION_JSON)
-                .content("\"author\":\"ChaJi\"," +
-//                        "\"id\":\1L\"," +
+                .content("{\"author\":\"ChaJi\"," +
                         "\"img\":\"winter\"," +
                         "\"contents\":\"so sweet\"," +
-                        "\"writeTime\":\"Mon Jan 1 1592 17:00:00 KST\""))
+                        "\"writeTime\":\"Mon Jan 1 1592 17:00:00 KST\"}"))
                 .andExpect(status().isOk());
 
     }
 
     @Test
     public void deactivate() throws Exception {
-        mvc.perform(delete("/board/ChaJi"))
+        mvc.perform(delete("/board/ChaJi/1"))
                 .andExpect(status().isOk());
 
         verify(boardService).deactivateBoard("ChaJi", 1L);
