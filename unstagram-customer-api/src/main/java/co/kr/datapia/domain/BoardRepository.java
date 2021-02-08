@@ -10,5 +10,9 @@ public interface BoardRepository extends CrudRepository<Board, Long> {
 
     Board save(Board board);
 
+    void delete(String author, Long id);
+
     Optional<Board> findByAuthor(String author);
+
+    Optional<Board> findByIdAndAuthor(Long Id, String author);
 }

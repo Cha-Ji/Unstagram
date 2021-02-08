@@ -43,4 +43,20 @@ public class BoardServiceTests {
 
     }
 
+    @Test
+    public void deactivateBoard(){
+        List<Board> mockBoard = new ArrayList<>();
+        mockBoard.add(Board.builder().author("ChaJi").build());
+
+        //given
+        given(boardRepository.findAll()).willReturn(mockBoard);
+        List<Board> boards = boardService.getBoards();
+
+        Board board = boards.get(0);
+
+        //assertThat
+        assertThat(board.getAuthor(), is("ChaJi"));
+
+    }
+
 }
