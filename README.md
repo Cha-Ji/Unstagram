@@ -1,32 +1,3 @@
-# 언스타그램
-* 인스타그램 기능 스프링 부트로 구현해보기
-
-# 개발 환경
-* Spring Boot
-* MacOS
-* InteliJ IDEA
-
-# 방향
-* Test Driven Develop 방식을 경험해보자.
-
-# 기능
-
-## 게시글 등록
-* 사진 게시
-* 글 게시
-* 작성시간 포함
-
-## 게시글 수정
-* 글 수정
-* 수정시간 포함
-* 사용자 인증
-
-## 게시글 삭제
-* 사용자 인증
-
-
-
-
 <!-- PROJECT SHIELDS -->
 <!--
 *** I'm using markdown "reference style" links for readability.
@@ -93,7 +64,7 @@ Spring Boot를 사용해 인스타그램 기능으 구현하는 프로젝트입�
 
 This section should list any major frameworks that you built your project using. Leave any add-ons/plugins for the acknowledgements section. Here are a few examples.
 * [Spring Boot](https://spring.io/projects/spring-boot)
-
+* TDD(Test Driven Develop)
 
 
 <!-- GETTING STARTED -->
