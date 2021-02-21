@@ -12,7 +12,9 @@ import java.util.List;
 
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.*;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
+import static org.mockito.Mockito.verify;
 
 public class BoardServiceTests {
 
@@ -42,6 +44,26 @@ public class BoardServiceTests {
 
 
     }
+
+    @Test
+    public void addBoard(){
+        //addBoard
+        Board board = new Board();
+        board = boardService.addBoard(
+                1L,
+                "ChaJi",
+                "winter",
+                "is cold",
+                board.getCreatedDate()
+        );
+
+        //verify. save(any())
+        verify(boardRepository).save(any());
+        //assertThat name is
+        assertThat(board.getAuthor(),is("ChaJi") );
+    }
+
+
 
     @Test
     public void deactivateBoard(){

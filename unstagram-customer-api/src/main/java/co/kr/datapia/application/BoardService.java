@@ -19,21 +19,24 @@ public class BoardService {
         this.boardRepository = boardRepository;
     }
 
-    public Board addBoard(String author, String img, String contents, LocalDateTime writeTime) {
+    public List<Board> getBoards() {
+
+        return boardRepository.findAll();
+    }
+
+    public Board addBoard(Long id, String author, String img, String contents, LocalDateTime writeTime) {
         Board board = Board.builder()
+                .id(id)
                 .author(author)
                 .img(img)
                 .contents(contents)
                 .writeTime(writeTime)
                 .build();
-        //TODO: id는 어떻게 지정할까?
-        return boardRepository.save(board);
+        boardRepository.save(board);
+
+        return board;
     }
 
-    public List<Board> getBoards() {
-
-        return boardRepository.findAll();
-    }
 
     public void updateBoard(String author, Long id, String img, String contents, LocalDateTime writeTime) {
         Board board = boardRepository.findByIdAndAuthor(id, author).orElse(null);
