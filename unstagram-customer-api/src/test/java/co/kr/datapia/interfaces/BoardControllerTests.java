@@ -58,12 +58,14 @@ public class BoardControllerTests {
     @Test
     public void create() throws Exception {
         //글 게시
+        Long id = 1L;
         String author       = "ChaJi";
         String img          = "winter";
         String contents     = "so cold";
 
 
         Board board = Board.builder()
+                .id(id)
                 .author(author)
                 .img(img)
                 .contents(contents)
@@ -71,7 +73,7 @@ public class BoardControllerTests {
 
         LocalDateTime writeTime = board.getCreatedDate();
 
-        given(boardService.addBoard(author, img, contents, writeTime)).willReturn(board);
+        given(boardService.addBoard(id, author, img, contents, writeTime)).willReturn(board);
 
         mvc.perform(post("/board")
                 .contentType(MediaType.APPLICATION_JSON)
@@ -81,7 +83,7 @@ public class BoardControllerTests {
                         "\"writeTime\":\"Tue Jan 26 2021 17:00:00 KST\"}"))
                 .andExpect(status().isCreated())
                 .andExpect(content().string("{}"));
-        verify(boardService).addBoard(author, img, contents, writeTime);
+        verify(boardService).addBoard(id, author, img, contents, writeTime);
     }
 
     @Test

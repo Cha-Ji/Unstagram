@@ -35,6 +35,7 @@ public class BoardController {
     ) throws URISyntaxException {
 
         //게시할 글의 정보를 얻는다.
+        Long    id          = resource.getId();
         String author       = resource.getAuthor();
         String img          = resource.getImg();
         String contents     = resource.getContents();
@@ -42,7 +43,7 @@ public class BoardController {
 
         //글을 게시한다.
         Board board = boardService.addBoard(
-                        author,img,contents,writeTime);
+                        id, author,img,contents,writeTime);
 
         //url에 게시글을 띄운다.
         String url = "/board/" + board.getAuthor() + board.getId();
