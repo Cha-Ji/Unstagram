@@ -41,6 +41,7 @@ public class BoardService {
     public void updateBoard(String author, Long id, String img, String contents, LocalDateTime writeTime) {
         Board board = boardRepository.findByIdAndAuthor(id, author).orElse(null);
 
+        
         board.setContents(contents);
         board.setWriteTime(writeTime);
 
