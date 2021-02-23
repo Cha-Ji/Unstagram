@@ -9,7 +9,6 @@ import javax.persistence.Id;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
-import java.util.List;
 
 @Builder
 @Getter
@@ -31,11 +30,8 @@ public class Board extends BaseTimeEntity {
     @NotEmpty
     private String contents;
 
-    @Setter
-    @NotEmpty
-    private LocalDateTime writeTime;
-
-    public Board(String author){
+    public Board(Long id, String author){
+        this.id = id;
         this.author = author;
     }
 }
