@@ -5,11 +5,12 @@ import co.kr.datapia.domain.BoardRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.persistence.Id;
+import javax.transaction.Transactional;
 import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
+@Transactional
 public class BoardService {
 
     private BoardRepository boardRepository;
@@ -24,13 +25,12 @@ public class BoardService {
         return boardRepository.findAll();
     }
 
-    public Board addBoard(Long id, String author, String img, String contents, LocalDateTime writeTime) {
+    public Board addBoard(Long id, String author, String img, String contents) {
         Board board = Board.builder()
                 .id(id)
                 .author(author)
                 .img(img)
                 .contents(contents)
-                .writeTime(writeTime)
                 .build();
         boardRepository.save(board);
 
@@ -38,16 +38,17 @@ public class BoardService {
     }
 
 
-    public void updateBoard(String author, Long id, String img, String contents, LocalDateTime writeTime) {
+    public Board updateBoard(Long id, String author, String contents) {
         Board board = boardRepository.findByIdAndAuthor(id, author).orElse(null);
 
-        
         board.setContents(contents);
-        board.setWriteTime(writeTime);
-
+        return board;
     }
 
-    public void deactivateBoard(String author, Long id) {
-        boardRepository.delete(author, id);
+    public Board deactivateBoard(Long id, String author) {
+        Board board = boardRepository.findByIdAndAuthor(id, author).orElse(null);
+        boardRepository.delete(board);
+
+        return board;
     }
 }

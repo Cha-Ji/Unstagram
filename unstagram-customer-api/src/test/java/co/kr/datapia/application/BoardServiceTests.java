@@ -9,6 +9,7 @@ import org.mockito.MockitoAnnotations;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.*;
@@ -53,8 +54,7 @@ public class BoardServiceTests {
                 1L,
                 "ChaJi",
                 "winter",
-                "is cold",
-                board.getCreatedDate()
+                "is cold"
         );
 
         //verify. save(any())
@@ -63,21 +63,59 @@ public class BoardServiceTests {
         assertThat(board.getAuthor(),is("ChaJi") );
     }
 
+    @Test
+    public void updateBoard(){
+        Long id = 1L;
+        String author = "ChaJi";
+        String img = "winter";
+        String contents = "is cold";
+
+        Board board = new Board();
+        board = boardService.addBoard(
+                id,
+                author,
+                img,
+                contents
+        );
+
+        given(boardRepository.findByIdAndAuthor(id, author))
+                .willReturn(Optional.of(board));
+
+        boardService.updateBoard(1L, "ChaJi",  "summer");
+
+        assertThat(board.getContents(), is("summer"));
+    }
 
 
     @Test
     public void deactivateBoard(){
-        List<Board> mockBoard = new ArrayList<>();
-        mockBoard.add(Board.builder().author("ChaJi").build());
+        Long id = 1L;
+        String author = "ChaJi";
+        String img = "winter";
+        String contents = "is cold";
+
+        Board mockBoard = new Board();
+        mockBoard = Board.builder()
+                .id(id)
+                .author(author)
+                .img(img)
+                .contents(contents)
+                .build();
 
         //given
-        given(boardRepository.findAll()).willReturn(mockBoard);
-        List<Board> boards = boardService.getBoards();
+        given(boardRepository
+                .findByIdAndAuthor(id, author))
+                .willReturn(Optional.of(mockBoard));
 
-        Board board = boards.get(0);
+        Board board = boardService.deactivateBoard(1L, "ChaJi");
+
+        verify(boardRepository).findByIdAndAuthor(1L, "ChaJi");
 
         //assertThat
-        assertThat(board.getAuthor(), is("ChaJi"));
+        assertThat(boardRepository
+                        .findByIdAndAuthor(id, author)
+                        .orElse(null)
+                , is(false));
 
     }
 

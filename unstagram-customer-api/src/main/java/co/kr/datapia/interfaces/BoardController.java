@@ -43,7 +43,7 @@ public class BoardController {
 
         //글을 게시한다.
         Board board = boardService.addBoard(
-                        id, author,img,contents,writeTime);
+                        id, author,img,contents);
 
         //url에 게시글을 띄운다.
         String url = "/board/" + board.getAuthor() + board.getId();
@@ -56,11 +56,9 @@ public class BoardController {
             @PathVariable("id") Long id,
             @RequestBody Board resource
     ){
-        String img          = resource.getImg();
         String contents     = resource.getContents();
-        LocalDateTime writeTime    = resource.getModifiedDate();
 
-        boardService.updateBoard(author, id,  img, contents, writeTime);
+        boardService.updateBoard(id, author,  contents);
         return "{}";
     }
 
@@ -69,7 +67,7 @@ public class BoardController {
         @PathVariable("author") String author,
         @PathVariable("id") Long id
     ){
-        boardService.deactivateBoard(author, id);
+        boardService.deactivateBoard(id, author);
         return "{}";
     }
 
