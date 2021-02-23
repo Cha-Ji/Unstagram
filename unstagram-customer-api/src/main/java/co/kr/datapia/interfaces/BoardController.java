@@ -29,6 +29,21 @@ public class BoardController {
         return boards;
     }
 
+    //TODO: 특정 작성자의 글
+    @GetMapping("/board/{author}")
+    public List<Board> boardsOfAuthor(){
+        List<Board> boards = boardService.getBoards();
+        return boards;
+    }
+
+    //TODO: 특정 작성자의 특정 글
+    @GetMapping("/board/{author}/{id}")
+    public Board boardOfAuthorAndId(){
+        Board board = boardService.getBoards().get(0);
+        return board;
+    }
+
+
     @PostMapping("/board")
     public ResponseEntity<?> create(
             @Valid @RequestBody Board resource

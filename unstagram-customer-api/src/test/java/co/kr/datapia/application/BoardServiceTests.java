@@ -109,8 +109,6 @@ public class BoardServiceTests {
 
         Board board = boardService.deactivateBoard(1L, "ChaJi");
 
-        verify(boardRepository).findByIdAndAuthor(1L, "ChaJi");
-
         //assertThat
         assertThat(boardRepository
                         .findByIdAndAuthor(id, author)
